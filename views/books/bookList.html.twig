@@ -1,0 +1,84 @@
+{% extends "base.html.twig" %}
+
+{% block title %}My Books List
+{% endblock %}
+
+
+{% block content %}
+	{% if message|length > 0 %}
+		<div class="alert alert-{{message.type}}" role="alert">
+			{{message.content}}
+		</div>
+	{% endif %}
+
+
+	<table class="table text-center mytable" id="tableBooks">
+		<thead>
+			<tr class="table-active">
+				<th>Images</th>
+				<th>Title</th>
+				<th>Author</th>
+				<th>Pages</th>
+				<th colspan="2">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			{% for book in books %}
+				<tr>
+
+					<td class="align-middle">
+						<img src="images/{{book.image}}" width="60px">
+					</td>
+
+					<td class="align-middle">
+						<a href="/books/{{book._id}}">{{book.name}}</a>
+					</td>
+
+					<td class="align-middle">{{book.author}}</td>
+					<td class="align-middle">{{book.pages}}</td>
+					<td class="align-middle">
+						<a href="/books/edit/{{book._id}}" class="btn btn-warning">Edit</a>
+					</td>
+					<td class="align-middle">
+						<form method="POST" action="/books/delete/{{book._id}}" onsubmit="return confirm('Are you sure to remove this book ?');">
+							<button class="btn btn-danger" type="submit">Delete</button>
+						</form>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<button class=" btn w-100 btn-primary mb-2" onclick=" showForm()">Add</button>
+
+	<form id="addForm" class="d-none" method="POST" action="" enctype="multipart/form-data">
+		<fieldset>
+			<legend>Create a book</legend>
+			<div class="form-group">
+				<label for="title">Title</label>
+				<input type="text" class="form-control" id="title" name="title">
+			</div>
+			<div class="form-group">
+				<label for="author">Author</label>
+				<input type="text" class="form-control" id="author" name="author">
+			</div>
+			<div class="form-group">
+				<label for="pages">Pages</label>
+				<input type="number" class="form-control" id="pages" name="pages">
+			</div>
+			<div class="form-group">
+				<label for="describe">Resume</label>
+				<textarea class="form-control" id="describe" name="describe" rows="3"></textarea>
+			</div>
+
+			<div class="form-group">
+				<label for="image">Image</label>
+				<input type="file" class="form-control-file" id="image" name="image">
+			</div>
+
+			<button class="btn btn-primary mb-2" type="submit">Validate</button>
+		</fieldset>
+	</form>
+	<script src="/javascript/addBook.js"></script>
+
+{% endblock %}</td></tr>

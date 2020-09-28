@@ -1,0 +1,76 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{book.name}}
+{% endblock %}
+
+
+{% block content %}
+	{% if isEdit %}
+		<form method="POST" action="/books/editServer">
+			<div class="row m-2">
+				<div class="col-6">
+					<h2>Informations</h2>
+					<legend>Create a book</legend>
+					<div class="form-group">
+						<label for="title">Title</label>
+						<input type="text" class="form-control" id="title" name="title" value="{{book.name}}">
+					</div>
+					<div class="form-group">
+						<label for="author">Author</label>
+						<input type="text" class="form-control" id="author" name="author" value="{{book.author}}">
+					</div>
+					<div class="form-group">
+						<label for="pages">Pages</label>
+						<input type="number" class="form-control" id="pages" name="pages" value="{{book.pages}}">
+					</div>
+				</div>
+				<div class="col-6">
+					<h2>Resume</h2>
+					<div class="form-group">
+						<label for="describe">Resume</label>
+						<textarea class="form-control" id="describe" name="describe" rows="3">{{book.describe}}</textarea>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" name="id" value="{{book._id}}">
+			<input type="submit" class="btn btn-primary w-100" value="Validate">
+		</form>
+		<form method="POST" action="/books/updateImage" enctype="multipart/form-data" class="mb-2">
+			<input type="hidden" name="id" value="{{book._id}}">
+			<h2 class="text-center">Image :</h2>
+			<div class="row ">
+				<img class="col-3" src="/images/{{book.image}}">
+				<div class="col-9">
+					<div class="form-group">
+						<label for="image">Image</label>
+						<input type="file" class="form-control-file" id="image" name="image">
+					</div>
+					<input type="submit" class="btn btn-primary" value="Edit">
+				</div>
+			</div>
+
+		</form>
+	{% else %}
+		<div class="row m-2">
+			<div class="col-6">
+				<h2>Informations</h2>
+				<div>Author :
+					{{book.author}}</div>
+				<div>
+					Nbre of Pages :
+					{{book.pages}}</div>
+				<img src="/images/{{book.image}}">
+
+
+			</div>
+			<div class="col-6">
+
+				<h2>Resume</h2>
+				<div>{{book.describe}}</div>
+
+
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}
